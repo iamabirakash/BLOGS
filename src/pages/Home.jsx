@@ -1,11 +1,13 @@
-import React from 'react'
+import MainSection from "../components/MainSection";
+import Navbar from "../components/Navbar";
 
-function Home() {
+const Home = () => {
   return (
     <div>
-    <h1>Home</h1>
+      <Navbar />
+      <MainSection />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
