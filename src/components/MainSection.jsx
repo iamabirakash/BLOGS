@@ -24,7 +24,7 @@ const MainSection = () => {
         </div>
         {/* IMAGE DIV */}
         <div>
-          <img src='/Thumb.png' alt="thumbnail" className="md:w-[40vw] rounded-3xl mt-14 md:mt-0 shadow-lg max-h-screen"/>
+          <img src='/Thumb.png' alt="thumbnail" className="md:w-[40vw] rounded-3xl md:mt-6 shadow-lg max-h-screen mt-14"/>
         </div>
     </section>
   );

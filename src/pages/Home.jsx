@@ -1,3 +1,4 @@
+import BlogSection from "../components/BlogSection";
 import MainSection from "../components/MainSection";
 import Navbar from "../components/Navbar";
 
@@ -6,6 +7,7 @@ const Home = () => {
     <div>
       <Navbar />
       <MainSection />
+      <BlogSection />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import {FaSearch} from 'react-icons/fa'
 
 const Navbar = () => {
   return (
-    <nav className="shadow-md flex flex-col md:flex-row justify-between items-center px-3 py-4 rounded-b-2xl fixed top-0 right-0 left-0  backdrop-blur-md z-50">
+    <nav className="shadow-md flex flex-col md:flex-row justify-between items-center px-8 py-3 rounded-b-2xl fixed top-0 right-0 left-0  backdrop-blur-md z-50">
         <h1 className="text-2xl font-bold mb-2 md:mb-0 text-white">
             Abir Akash Blogs
         </h1>
