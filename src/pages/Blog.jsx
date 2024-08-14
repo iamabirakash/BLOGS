@@ -1,10 +1,117 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link, useParams } from 'react-router-dom';
+import { AiFillHome } from "react-icons/ai";
+import BlogCard from '../components/BlogCard';
+import { MdAccountCircle, MdEdit, MdDelete } from 'react-icons/md';
 
 const Blog = () => {
+  const { id } = useParams();
+  const [userAuthenticated, setUserAuthenticated] = useState(false);
+
   return (
-    <div>
-    <h1>Blog</h1>
-    </div>
+    <section>
+      {/* NAVIGATION BAR */}
+      <nav className="p-5 border-b-2 flex gap-2 bg-purple-500">
+        <Link to="/" className="font-semibold flex justify-center items-center gap-2 text-gray-300 hover:text-white transition-all duration-300 ease-in-out">
+          <AiFillHome /> <span>Home</span>
+        </Link>
+        /<span className="text-white cursor-pointer">Mern Stack Course</span>
+      </nav>
+
+      {/* BLOG */}
+      <div className="flex mx-5 gap-3 md:gap-5 flex-col md:flex-row">
+        {/* SELECTED BLOG SECTION */}
+        <div className="w-full md:w-[60vw] bg-white mx-auto p-5 rounded-lg my-10">
+          <h1 className="text-4xl font-bold my-5">Mern Stack Course</h1>
+          <img src="/Thumb.png" alt="blog's thumbnail" className="w-full h-[40vh] object-cover rounded-2xl shadow-md"/>
+          <div className="flex gap-2 my-5">
+            <span className="px-4 py-2 text-gray-600 text-xs md:text-sm bg-white rounded-full font-semibold shadodw-md capitalize">Coding</span>
+            <span className="px-4 py-2 text-gray-600 text-xs md:text-sm bg-white rounded-full font-semibold shadodw-md capitalize">Programming</span>
+          </div>
+          <hr />
+          <div className="my-5">
+            <p className="overflow-x-clip">Aliquip Lorem voluptate elit in eiusmod tempor est nulla culpa Lorem ullamco. Id incididunt fugiat ea in occaecat id nulla esse. Ullamco ut tempor cupidatat ullamco cillum ipsum. Aliquip qui labore qui aute. Lorem nisi ut ut Lorem ipsum mollit nisi eiusmod sunt consequat aute esse amet.</p>
+          </div>
+          <div className="flex justify-start items-center gap-3 text-base">
+            <img src="/Thumb.png" alt="mylogo" className="rounded-full w-[40px] h-[40px]"
+            />
+            <div>
+              <h4 className="font-bold">Abir Akash</h4>
+              <p className="font-bold">Aug 13, 2024</p>
+            </div>
+          </div>
+        </div>
+
+        {/* SIDEBAR FOR BLOGS */}
+        <div className="my-10">
+          {/* BLOG STARTS */}
+          <h3 className="text-3xl font-semibold text-gray-600 ml-3">
+            More Blogs
+          </h3>
+
+          {/* BLOG CONTENT */}
+          <div className="grid grid-cols-1 gap-3 md:h-[80vh] md:overflow-y-scroll md:px-3 md:pb-2 scroll-hide my-3">
+            <BlogCard />
+            <BlogCard />
+            <BlogCard />
+          </div>
+
+          {/* COMMENT SECTION */}
+          <h3 className="text-3xl font-semibold text-gray-600 ml-3 mt-10">
+            Comments
+          </h3>
+
+          {/* COMMENT CONTENT */}
+          <div>
+            {/* ADDING COMMENTS */}
+            <div className="flex justify-between items-start gap-3 my-5">
+              {
+                userAuthenticated ? (
+                  <img src="/Thumb.png" alt="Profile" className="w-[50px] rounded-full"/>
+                ) : (
+                  <MdAccountCircle className="text-5xl text-gray-600" />
+                )}
+
+              <div className="flex flex-col w-full gap-3">
+                <textarea name="message" id="message" rows="2" placeholder="Write a comment" className="md:w-[35vw] rounded-lg py-2 outline-none shadow-md text-base px-3"></textarea>
+                <div className="flex gap-3">
+                  <button className="text-white bg-purple-500 hover:bg-purple-400 px-5 py-1 text-base font-semibold transition-all duration-300 ease-linear rounded-md w-fit">
+                    Add
+                  </button>
+                  <button className="text-white bg-purple-500 hover:bg-purple-400 px-5 py-1 text-base font-semibold transition-all duration-300 ease-linear rounded-md w-fit">
+                    {!userAuthenticated? "Sign in With Google" : "Sign Out"}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* LISTING COMMENTS */}
+            <div>
+                <div className="flex flex-col md:flex-row justify-start items-center md:gap-3 my-3" id="commentsDiv">
+                  <img src="/Thumb.png" className="rounded-full hidden md:block w-[50px] text-gray-600"/>
+                  <div className="bg-white w-full md:w-[35vw] rounded-lg py-2 text-sm md:text-base px-3 shadow-md">
+                    <div className="flex justify-between">
+                      <span className="text-xs md:text-sm font-semibold">
+                        Abir Bora
+                      </span>
+                      <div className="flex gap-1">
+                        <MdEdit className="text-gray-500 hover:text-purple-500 hover:scale-105 transition-all ease-in-out cursor-pointer"/>
+                        <MdDelete className="text-gray-500 hover:text-purple-500 hover:scale-105 transition-all ease-in-out cursor-pointer"/>
+                      </div>
+                    </div>
+                    <p className={`outline-none bg-gray-100 shadow-inner pl-1 rounded-md my-3 transition-all duration-500 ease-in-out`}>
+                      Your Video Was Just Amazing
+                    </p>
+                      <button className="bg-purple-500 hover:bg-purple-600 px-3 py-1 text-white text-sm rounded-lg" id="saveButton">
+                        Save
+                      </button>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
 
