@@ -3,7 +3,7 @@ import React from 'react'
 const Admin = () => {
   return (
     <div>
-      <div>
+      <div className="h-screen flex justify-center items-center">
         <form action="" className="grid grid-cols-1 gap-3 bg-white w-[80vw] md:w-[20vw] p-3 rounded-lg">
           <div className="flex flex-col">
             <label htmlFor="username" className="text-lg font-semibold text-gray-600">
