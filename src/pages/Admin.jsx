@@ -2,6 +2,7 @@ import React from 'react'
 import BlogContext from '../context/BlogContext'
 import { useContext } from 'react'
 import AdminNavbar from '../components/AdminNavbar'
+import CreateBlog from '../components/CreateBlog'
 
 const Admin = () => {
 
