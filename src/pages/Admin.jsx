@@ -1,6 +1,7 @@
 import React from 'react'
 import BlogContext from '../context/BlogContext'
 import { useContext } from 'react'
+import AdminNavbar from '../components/AdminNavbar'
 
 const Admin = () => {
 
@@ -31,9 +32,9 @@ const Admin = () => {
       </div>
       ) : (
         <div>
-          {/* <AdminNavbar />
-          <CreateBlog/> */}
-          <h2>User is now Authenticated</h2>
+          <AdminNavbar />
+          <CreateBlog/>
+          {/* <h2>User is now Authenticated</h2> */}
         </div>
       )}
     </div>

@@ -6,7 +6,7 @@ import Admin from './pages/Admin'
 import BlogContext from './context/BlogContext'
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState(true)
   const [count, setCount] = useState(0)
 
   return (
