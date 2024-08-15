@@ -12,7 +12,7 @@ const Admin = () => {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:5000/api/login", {
-        username: e.target.username.value,
+        username: e.target.username.value, //name = username
         password: e.target.password.value,
       });
       const data = await res.data;
@@ -22,6 +22,12 @@ const Admin = () => {
       console.log(error.message);
     }
   };
+
+  useEffect(() => {
+    checkAuth()
+      .then((data) => setIsAuth(data))
+      .catch((error) => console.log(error.message));
+  }, []);
 
   return (
     <div>
