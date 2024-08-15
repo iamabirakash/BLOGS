@@ -52,3 +52,5 @@ const login = async (req, res) => {
         return res.status(500).json({ success: flase, message: error.message});
     }
 };
+
+module.exports = { signup, login };
