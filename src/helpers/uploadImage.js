@@ -3,7 +3,7 @@ import axios from "axios";
 export const uploadImage = async (image, onUploadProgress) => {
   const formData = new FormData();
   formData.append("file", image);
-  formData.append("upload_preset", "mern-blog");
+  formData.append("upload_preset", "mern-blog-app");
   formData.append("api_key", "641759744243749");
 
   const config = {
