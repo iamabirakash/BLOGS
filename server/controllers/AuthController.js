@@ -54,7 +54,7 @@ const login = async (req, res) => {
 };
 
 const checkAuth = async (req, res) => {
-    const id = req.id;
+    const id = req.id; //req.id will come from verifyToken try else block
     try {
       const user = await User.findById(id).select("-password");
       if (!user) {
