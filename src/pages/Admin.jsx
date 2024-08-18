@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import AdminNavbar from '../components/AdminNavbar'
 import CreateBlog from '../components/CreateBlog'
+import { checkAuth } from '../helpers/checkAuth';
 
 const Admin = () => {
 
@@ -25,11 +26,11 @@ const Admin = () => {
     }
   };
 
-  // useEffect(() => {
-  //   checkAuth()
-  //     .then((data) => setIsAuth(data))
-  //     .catch((error) => console.log(error.message));
-  // }, []);
+  useEffect(() => { //it will run whenever the page will get reload...
+    checkAuth()
+      .then((data) => setIsAuth(data))
+      .catch((error) => console.log(error.message));
+  }, []);
 
   return (
     <div>
