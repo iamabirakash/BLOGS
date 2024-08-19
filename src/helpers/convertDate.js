@@ -10,6 +10,6 @@ export const convertDate = (date) => {
     const year = newDate.getFullYear();
 
     //   return the formatted date
-    const formattedDate = `${monthAbbreviation} ${day}, ${year}`;
+    const formattedDate = `${day} ${monthAbbreviation}, ${year}`;
     return formattedDate;
 };
