@@ -8,11 +8,11 @@ import { Toaster } from 'react-hot-toast'
 
 function App() {
   const [isAuth, setIsAuth] = useState(false)
-  const [count, setCount] = useState(0)
+  const [blogs, setBlogs] = useState(false)
 
   return (
     <>
-    <BlogContext.Provider value={{ isAuth, setIsAuth }}>
+    <BlogContext.Provider value={{ isAuth, setIsAuth, blogs, setBlogs }}>
       <BrowserRouter>
         <Toaster />
         <Routes>
