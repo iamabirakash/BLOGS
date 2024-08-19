@@ -23,5 +23,21 @@ const createBlog = async (req, res) => {
   }
 };
 
+const getAllBlogs = async (req, res) => {
+    try {
+        let blogs = await Blog.find().sort({ createdAt: -1 });
+        if (!blogs) {
+          return res
+            .status(404)
+            .json({ success: false, message: "No Blogs Found" });
+        }
+        return res
+          .status(200)
+          .json({ success: true, blogs, message: "All blogs fetched" });
+    } catch (error) {
+        return res.status(500).json({ success: false, messsage: error.messsage });
+    }
+}
 
-module.exports = { createBlog };
+
+module.exports = { createBlog, getAllBlogs };
