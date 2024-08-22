@@ -4,8 +4,15 @@ import { convertDate } from '../helpers/convertDate'
 
 const BlogCard = ({ thumbnail, title, tags, _id, createdAt, author }) => {
   return (
-    <Link to={`blog/${_id}`} className="realtive flex flex-col md:flex-row py-2 gap-3 justify-start items-center md:px-5 rounded-3xl shadow-md bg-white w-full h-fit">
-        <img src={thumbnail} alt='Thumbnail' className="md:w-[20vw] rounded-2xl md:rounded-3xl"/>
+    <Link
+      to={`blog/${_id}`}
+      className="realtive flex flex-col md:flex-row py-2 gap-3 justify-start items-center md:px-5 rounded-3xl shadow-md bg-white w-full h-fit"
+    >
+        <img
+          src={thumbnail}
+          alt='Thumbnail'
+          className="md:w-[20vw] rounded-2xl md:rounded-3xl"
+        />
         <div className="px-3 md:px-0">
             <h3 className="text-xl font-bold">
               {title}
@@ -22,7 +29,11 @@ const BlogCard = ({ thumbnail, title, tags, _id, createdAt, author }) => {
             </div>
             <hr className="my-2" />
             <div className="flex justify-start items-center gap-3">
-              <img src="/Thumb.png" alt="logo" className="rounded-full w-[30px] h-[30px]"/>
+              <img
+                src="/Thumb.png"
+                alt="logo"
+                className="rounded-full w-[30px] h-[30px]"
+              />
               <div>
                 <h4 className="font-bold text-sm">{author}</h4>
                 <p className="font-bold text-sm">{convertDate(createdAt)}</p>
