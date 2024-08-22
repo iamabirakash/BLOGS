@@ -1,12 +1,31 @@
-import React, { useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { AiFillHome } from "react-icons/ai";
 import BlogCard from '../components/BlogCard';
 import { MdAccountCircle, MdEdit, MdDelete } from 'react-icons/md';
+import BlogContext from '../context/BlogContext';
+import { getBlogById } from '../helpers/getBlogById';
+import { getBlogs } from '../helpers/getBlogs';
+import { convertDate } from '../helpers/convertDate';
 
 const Blog = () => {
   const { id } = useParams();
-  const [userAuthenticated, setUserAuthenticated] = useState(false);
+  const [blog, setBlog] = useState([]);
+  const [blogs, setBlogs] = useState([]);
+
+  const { userAuthenticated, setUserAuthenticated } = useContext(BlogContext);
+
+  useEffect(() => {
+    getBlogById(id)
+      .then((data) => setBlog(data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    getBlogs()
+      .then((data) => setBlogs(data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <section>
@@ -15,29 +34,37 @@ const Blog = () => {
         <Link to="/" className="font-semibold flex justify-center items-center gap-2 text-gray-300 hover:text-white transition-all duration-300 ease-in-out">
           <AiFillHome /> <span>Home</span>
         </Link>
-        /<span className="text-white cursor-pointer">Mern Stack Course</span>
+        /<span className="text-white cursor-pointer">
+            {blog.title}
+        </span>
       </nav>
 
       {/* BLOG */}
       <div className="flex mx-5 gap-3 md:gap-5 flex-col md:flex-row">
         {/* SELECTED BLOG SECTION */}
         <div className="w-full md:w-[60vw] bg-white mx-auto p-5 rounded-lg my-10">
-          <h1 className="text-4xl font-bold my-5">Mern Stack Course</h1>
-          <img src="/Thumb.png" alt="blog's thumbnail" className="w-full h-[40vh] object-cover rounded-2xl shadow-md"/>
+          <h1 className="text-4xl font-bold my-5">
+              {blog.title}
+          </h1>
+          <img src={blog.thumbnail} alt="blog's thumbnail" className="w-full h-[40vh] object-cover rounded-2xl shadow-md"/>
           <div className="flex gap-2 my-5">
-            <span className="px-4 py-2 text-gray-600 text-xs md:text-sm bg-white rounded-full font-semibold shadodw-md capitalize">Coding</span>
-            <span className="px-4 py-2 text-gray-600 text-xs md:text-sm bg-white rounded-full font-semibold shadodw-md capitalize">Programming</span>
+            {
+              blogs.tag?.map((tag,i) => (
+                <span key={i} className="px-4 py-2 text-gray-600 text-xs md:text-sm bg-white rounded-full font-semibold shadodw-md capitalize">
+                  {tag}
+                </span>
+            ))}
           </div>
           <hr />
           <div className="my-5">
-            <p className="overflow-x-clip">Aliquip Lorem voluptate elit in eiusmod tempor est nulla culpa Lorem ullamco. Id incididunt fugiat ea in occaecat id nulla esse. Ullamco ut tempor cupidatat ullamco cillum ipsum. Aliquip qui labore qui aute. Lorem nisi ut ut Lorem ipsum mollit nisi eiusmod sunt consequat aute esse amet.</p>
+            <p className="overflow-x-clip" dangerouslySetInnerHTML={{ __html: blog.content }}>
+            </p>
           </div>
           <div className="flex justify-start items-center gap-3 text-base">
-            <img src="/Thumb.png" alt="mylogo" className="rounded-full w-[40px] h-[40px]"
-            />
+            <img src="/Thumb.png" alt="mylogo" className="rounded-full w-[40px] h-[40px]"/>
             <div>
-              <h4 className="font-bold">Abir Akash</h4>
-              <p className="font-bold">Aug 13, 2024</p>
+              <h4 className="font-bold">{blog.author}</h4>
+              <p className="font-bold">{convertDate(blog.createdAt)}</p>
             </div>
           </div>
         </div>
@@ -51,9 +78,9 @@ const Blog = () => {
 
           {/* BLOG CONTENT */}
           <div className="grid grid-cols-1 gap-3 md:h-[80vh] md:overflow-y-scroll md:px-3 md:pb-2 scroll-hide my-3">
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
+          {
+            blogs.map((blog) => <BlogCard key={blog._id} {...blog}/>)
+          }
           </div>
 
           {/* COMMENT SECTION */}
