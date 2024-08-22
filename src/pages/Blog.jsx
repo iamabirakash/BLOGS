@@ -7,6 +7,9 @@ import BlogContext from '../context/BlogContext';
 import { getBlogById } from '../helpers/getBlogById';
 import { getBlogs } from '../helpers/getBlogs';
 import { convertDate } from '../helpers/convertDate';
+import { auth } from '../firebaseConfig';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import toast from 'react-hot-toast';
 
 const Blog = () => {
   const { id } = useParams();
@@ -14,6 +17,23 @@ const Blog = () => {
   const [blogs, setBlogs] = useState([]);
 
   const { userAuthenticated, setUserAuthenticated } = useContext(BlogContext);
+
+  const provider = new GoogleAuthProvider();
+
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const { displayName, photoURL, uid } = result.user;
+        setUserName(displayName);
+        setUserImage(photoURL);
+        setCurrentUserId(uid);
+        setUserAuthenticated(true);
+        toast.success(`Welcome ${displayName} 👋`);
+      })
+      .catch((err) => toast.error(err.message));
+  };
 
   useEffect(() => {
     getBlogById(id)
@@ -105,7 +125,9 @@ const Blog = () => {
                   <button className="text-white bg-purple-500 hover:bg-purple-400 px-5 py-1 text-base font-semibold transition-all duration-300 ease-linear rounded-md w-fit">
                     Add
                   </button>
-                  <button className="text-white bg-purple-500 hover:bg-purple-400 px-5 py-1 text-base font-semibold transition-all duration-300 ease-linear rounded-md w-fit">
+                  <button
+                    className="text-white bg-purple-500 hover:bg-purple-400 px-5 py-1 text-base font-semibold transition-all duration-300 ease-linear rounded-md w-fit"
+                    onClick={signInWithGoogle}>
                     {!userAuthenticated? "Sign in With Google" : "Sign Out"}
                   </button>
                 </div>
