@@ -39,5 +39,22 @@ const getAllBlogs = async (req, res) => {
     }
 }
 
+const getBlogById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    let blog = await Blog.findById(id);
+    if (!blog) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Blog not found" });
+    }
+    return res
+      .status(200)
+      .json({ success: true, message: "Blog fetched", blog });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
-module.exports = { createBlog, getAllBlogs };
+
+module.exports = { createBlog, getAllBlogs, getBlogById };
