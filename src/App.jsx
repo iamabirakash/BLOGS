@@ -7,12 +7,13 @@ import BlogContext from './context/BlogContext'
 import { Toaster } from 'react-hot-toast'
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false)
-  const [blogs, setBlogs] = useState(false)
+  const [isAuth, setIsAuth] = useState(false);
+  const [blogs, setBlogs] = useState(false);
+  const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   return (
     <>
-    <BlogContext.Provider value={{ isAuth, setIsAuth, blogs, setBlogs }}>
+    <BlogContext.Provider value={{ isAuth, setIsAuth, blogs, setBlogs, userAuthenticated, setUserAuthenticated }}>
       <BrowserRouter>
         <Toaster />
         <Routes>
