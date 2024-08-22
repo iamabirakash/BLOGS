@@ -3,6 +3,7 @@ import BlogCard from './BlogCard'
 import BlogContext from '../context/BlogContext';
 import { convertDate } from '../helpers/convertDate';
 import { getBlogs } from '../helpers/getBlogs';
+import { Link } from 'react-router-dom';
 
 const BlogSection = () => {
   const { blogs, setBlogs } = useContext(BlogContext);
@@ -16,7 +17,7 @@ const BlogSection = () => {
   return (
     <div className="my-20 mx-10 md:mx-auto w-fit flex flex-col md:flex-row gap-3 lg:gap-8 justify-center items-center">
         {/* SECOND BLOG WILL BE HERE */}
-        <div className="py-3 flex mb-4 flex-col gap-3 w-fit rounded-2xl shadow-md mx-auto bg-white">
+        <Link to={`blog/${blogs[1]?._id}`} className="py-3 flex mb-4 flex-col gap-3 w-fit rounded-2xl shadow-md mx-auto bg-white">
             <h3 className="text-3xl font-bold mx-5">
               {blogs[1]?.title.length > 23
               ? blogs[1]?.title.slice(0, 23) + "..."
@@ -49,7 +50,7 @@ const BlogSection = () => {
                 <p className="font-bold">{convertDate(blogs[1]?.createdAt)}</p>
               </div>
             </div>
-          </div>
+        </Link>
           {/* REST ALL BLOGS WILL BE HERE */}
       <div className="grid gird-cols-1 gap-3 -mt-52 md:h-[80vh] md:overflow-y-scroll md:px-3 md:pb-2 scoll-hide">
         {Array.isArray(blogs) && blogs.length > 2 ? (
