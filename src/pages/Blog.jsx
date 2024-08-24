@@ -15,8 +15,20 @@ const Blog = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState([]);
   const [blogs, setBlogs] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [blogComments, setBlogComments] = useState([]);
+  const [postId, setPostId] = useState("");
 
-  const { userAuthenticated, setUserAuthenticated } = useContext(BlogContext);
+  const {
+    userAuthenticated,
+    setUserAuthenticated,
+    currentUserId,
+    setCurrentUserId,
+    userName,
+    setUserName,
+    userImage,
+    setUserImage,
+  } = useContext(BlogContext);
 
   const provider = new GoogleAuthProvider();
 
@@ -35,11 +47,41 @@ const Blog = () => {
       .catch((err) => toast.error(err.message));
   };
 
+  const signOutWithGoogle = () => {
+    auth.signOut().then(() => {
+      setUserAuthenticated(false);
+      setUserName("");
+      setUserImage("");
+      setCurrentUserId("");
+      toast.success("Logged out successfully");
+    });
+  };
+
+  const addComment = async () => {
+    if (!userAuthenticated) {
+      return toast.error("Plese login to comment");
+    }
+    if (newComment.trim() === "" || newComment.split(" ").length < 3) {
+      toast.error("Comment should be atleast 3 words long");
+      return;
+    }
+    const res = await axios.post(`http://localhost:5000/api/addComment/${id}`, {
+      comment: newComment,
+      userName,
+      userImage,
+      userId: currentUserId,
+    });
+    const data = await res.data;
+    toast.success(data.message);
+    getComments(id);
+    setNewComment("");
+  };
+
   useEffect(() => {
     getBlogById(id)
       .then((data) => setBlog(data))
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     getBlogs()
@@ -114,20 +156,38 @@ const Blog = () => {
             <div className="flex justify-between items-start gap-3 my-5">
               {
                 userAuthenticated ? (
-                  <img src="/Thumb.png" alt="Profile" className="w-[50px] rounded-full"/>
+                  <img
+                    src={userImage}
+                    alt={`${userName}'s Profile`}
+                    className="w-[50px] rounded-full"
+                  />
                 ) : (
                   <MdAccountCircle className="text-5xl text-gray-600" />
                 )}
 
               <div className="flex flex-col w-full gap-3">
-                <textarea name="message" id="message" rows="2" placeholder="Write a comment" className="md:w-[35vw] rounded-lg py-2 outline-none shadow-md text-base px-3"></textarea>
+                <textarea
+                  name="message"
+                  id="message"
+                  rows="2"
+                  placeholder="Write a comment"
+                  className="md:w-[35vw] rounded-lg py-2 outline-none shadow-md text-base px-3"
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                ></textarea>
                 <div className="flex gap-3">
-                  <button className="text-white bg-purple-500 hover:bg-purple-400 px-5 py-1 text-base font-semibold transition-all duration-300 ease-linear rounded-md w-fit">
+                  <button
+                    onClick={addComment}
+                    className="text-white bg-purple-500 hover:bg-purple-400 px-5 py-1 text-base font-semibold transition-all duration-300 ease-linear rounded-md w-fit"
+                  >
                     Add
                   </button>
                   <button
                     className="text-white bg-purple-500 hover:bg-purple-400 px-5 py-1 text-base font-semibold transition-all duration-300 ease-linear rounded-md w-fit"
-                    onClick={signInWithGoogle}>
+                    onClick={
+                      !userAuthenticated ? signInWithGoogle : signOutWithGoogle
+                    }
+                  >
                     {!userAuthenticated? "Sign in With Google" : "Sign Out"}
                   </button>
                 </div>
