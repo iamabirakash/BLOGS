@@ -10,6 +10,9 @@ function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [blogs, setBlogs] = useState(false);
   const [userAuthenticated, setUserAuthenticated] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userImage, setUserImage] = useState("");
+  const [currentUserId, setCurrentUserId] = useState("");
 
   return (
     <>
